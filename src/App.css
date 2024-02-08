@@ -1,0 +1,31 @@
+#root{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bannerHome{
+  object-fit: cover;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.bg-green{
+  background: #003c25;
+}
+
+.mainContainer{
+  flex-grow: 1;
+}
+
+.txt-verdecito{
+  color: #0b5c3d;
+}
+
+.imgCard{
+  object-fit: cover;
+}
+
+.img404{
+  object-fit: cover;
+}

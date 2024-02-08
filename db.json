@@ -1,0 +1,55 @@
+{
+    "productos": [
+      {
+        "nombreProducto": "Té verde",
+        "precio": 1200,
+        "categoria": "bebida caliente",
+        "descripcion-breve": "Una exquisita taza de té verde",
+        "descripcion-amplia": "Disfruta de los beneficios del té verde con esta deliciosa infusión.",
+        "imagen": "https://media.admagazine.com/photos/618a6151be961b98e9f0991c/master/w_1600,c_limit/85139.jpg",
+        "disponible": true,
+        "id": "2"
+      },
+      {
+        "nombreProducto": "Té de manzanilla",
+        "precio": 1000,
+        "categoria": "bebida caliente",
+        "descripcion-breve": "Infusión relajante de manzanilla",
+        "descripcion-amplia": "Calma tus sentidos con esta suave infusión de manzanilla.",
+        "imagen": "https://www.cocina-cubana.com/base/stock/Recipe/196-image/196-image_web.jpg.webp",
+        "disponible": true,
+        "id": "3"
+      },
+      {
+        "nombreProducto": "Té negro",
+        "precio": 1300,
+        "categoria": "bebida caliente",
+        "descripcion-breve": "Energizante té negro",
+        "descripcion-amplia": "Recarga tu energía con esta potente infusión de té negro.",
+        "imagen": "https://d22fxaf9t8d39k.cloudfront.net/c942078d1fd4eecc50d10d6200f77d7e97191eaceabddaab9c7c4725fc991e7d11737.jpeg",
+        "disponible": true,
+        "id": "4"
+      },
+      {
+        "nombreProducto": "Mate Cocido",
+        "precio": 1100,
+        "categoria": "bebida caliente",
+        "descripcion-breve": "Auténtico mate tradicional",
+        "descripcion-amplia": "Descubre el sabor único del mate con esta infusión tradicional.",
+        "imagen": "https://yerbamateargentina.org.ar/imagenes/archivos/seccionesmodulo/1638_imagen.jpg?random=1604503134",
+        "disponible": true,
+        "id": "5"
+      },
+      {
+        "nombreProducto": "Capuccino",
+        "precio": 1400,
+        "categoria": "bebida caliente",
+        "descripcion-breve": "Cappuccino de alta calidad",
+        "descripcion-amplia": "Disfruta de la riqueza y suavidad de este cappuccino premium.",
+        "imagen": "https://methodicalcoffee.com/cdn/shop/articles/cap.jpg?v=1684507364",
+        "disponible": true,
+        "id": "6"
+      }
+    ]
+  }
+  
