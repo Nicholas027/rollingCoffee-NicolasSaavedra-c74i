@@ -7,6 +7,8 @@ import Inicio from "./components/pages/Inicio";
 import Error404 from "./components/pages/Error404";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import "bootstrap-icons/font/bootstrap-icons.min.css";
+
 function App() {
   return (
     //administrador de rutas

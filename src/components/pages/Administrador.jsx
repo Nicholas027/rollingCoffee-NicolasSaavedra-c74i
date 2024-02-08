@@ -74,9 +74,10 @@ const Administrador = () => {
   return (
     <Container className="mainContainer mt-3">
       <div className="table-responsive">
+        <h2 className="lead">Productos Disponibles:</h2>
         <div className="d-flex justify-content-end mb-3">
           <button className="btn btn-primary" onClick={handleAgregarModalOpen}>
-            Agregar
+          <i className="bi bi-plus-lg"></i>
           </button>
         </div>
         <table className="table table-striped table-bordered">
@@ -111,13 +112,13 @@ const Administrador = () => {
                     className="btn btn-success mb-2"
                     onClick={() => handleEditarProducto(producto.id)}
                   >
-                    Editar
+                    <i className="bi bi-pen-fill"></i>
                   </button>
                   <button
                     className="btn btn-danger"
                     onClick={() => handleBorrarProducto(producto.id)}
                   >
-                    Borrar
+                    <i className="bi bi-trash"></i>
                   </button>
                 </td>
               </tr>
