@@ -116,17 +116,17 @@ const Administrador = () => {
             <Form.Group controlId="precio">
               <Form.Label>Precio*</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 placeholder="Ingrese el precio"
                 {...register("precio", {
                   required: "El precio del producto es obligatorio",
                   min: {
-                    value: 2,
-                    message: "Debe tener al menos 2 caracteres",
+                    value: 100,
+                    message: "Debe ingresar un monto de almenos $100",
                   },
                   max: {
-                    value: 30,
-                    message: "Debe ingresar como maximo 30 caracteres",
+                    value: 10000,
+                    message: "Debe ingresar como maximo un monto de $10.000",
                   },
                 })}
               />
@@ -141,6 +141,10 @@ const Administrador = () => {
                 placeholder="Ingrese la URL de la imagen"
                 {...register("imagen", {
                   required: "La URL de la imagen es obligatoria",
+                  pattern: {
+                    value: /(http|https):\/\/.*\/img/,
+                    message: "Formato de URL obligatorio",
+                  },
                 })}
               />
               <Form.Text className="text-danger">
@@ -155,7 +159,9 @@ const Administrador = () => {
                   required: "Seleccione una opción",
                 })}
               >
-                <option value="" disabled>Seleccione una categoría</option>
+                <option value="" disabled>
+                  Seleccione una categoría
+                </option>
                 <option value="bebidaCaliente">Bebida Caliente</option>
                 <option value="bebidaFria">Bebida Fría</option>
               </Form.Select>
@@ -171,16 +177,16 @@ const Administrador = () => {
                 {...register("descripcionBreve", {
                   required: "Inserte una descripción breve por favor",
                   minLength: {
-                    value: 5,
-                    message: "Debe tener al menos 5 caracteres",
+                    value: 50,
+                    message: "Debe tener al menos 50 caracteres",
                   },
                   maxLength: {
-                    value: 20,
+                    value: 150,
                     message: "No debe superar los 20 caracteres",
                   },
                 })}
               />
-               <Form.Text className="text-danger">
+              <Form.Text className="text-danger">
                 {errors.descripcionBreve?.message}
               </Form.Text>
             </Form.Group>
@@ -192,16 +198,16 @@ const Administrador = () => {
                 {...register("descripcionAmplia", {
                   required: "Inserte una descripción amplia por favor",
                   minLength: {
-                    value: 15,
-                    message: "Debe tener al menos 15 caracteres",
+                    value: 150,
+                    message: "Debe tener al menos 150 caracteres",
                   },
                   maxLength: {
-                    value: 50,
-                    message: "No debe superar los 50 caracteres",
+                    value: 300,
+                    message: "No debe superar los 300 caracteres",
                   },
                 })}
               />
-               <Form.Text className="text-danger">
+              <Form.Text className="text-danger">
                 {errors.descripcionAmplia?.message}
               </Form.Text>
             </Form.Group>
