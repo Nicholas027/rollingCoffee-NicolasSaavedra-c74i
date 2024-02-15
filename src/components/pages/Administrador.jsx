@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
 import { Container, Modal, Button, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 
 const Administrador = () => {
   const [productos, setProductos] = useState([]);
   const [showAgregarModal, setShowAgregarModal] = useState(false);
-  const [formulario, setFormulario] = useState({
-    nombreProducto: "",
-    precio: "",
-    imagen: "",
-    categoria: "",
-    descripcionBreve: "",
-    descripcionAmplia: "",
-  });
-  const [errores, setErrores] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     fetch("http://localhost:3001/productos")
@@ -22,62 +19,22 @@ const Administrador = () => {
   }, []);
 
   const handleAgregarModalOpen = () => {
-    setFormulario({
-      nombreProducto: "",
-      precio: "",
-      imagen: "",
-      categoria: "bebidaCaliente",
-      descripcionBreve: "",
-      descripcionAmplia: "",
-    });
-    setErrores({});
     setShowAgregarModal(true);
   };
 
   const handleAgregarModalClose = () => setShowAgregarModal(false);
 
-  const handleAgregarProducto = () => {
-    const nuevosErrores = {};
-    if (!formulario.nombreProducto) {
-      nuevosErrores.nombreProducto = "Ingrese el nombre del producto";
-    }
-    if (!formulario.precio) {
-      nuevosErrores.precio = "Ingrese el precio del producto";
-    }
-    if (!formulario.imagen) {
-      nuevosErrores.imagen = "Ingrese la URL de la imagen";
-    }
-    if (!formulario.categoria) {
-      nuevosErrores.categoria = "Seleccione una categoria";
-    }
-    if (!formulario.descripcionBreve) {
-      nuevosErrores.descripcionBreve = "Ingrese una descripcion breve";
-    }
-    if (!formulario.descripcionAmplia) {
-      nuevosErrores.descripcionAmplia = "Ingrese una descripcion Amplia";
-    }
-
-    if (Object.keys(nuevosErrores).length === 0) {
-      setProductos([...productos, formulario]);
-      handleAgregarModalClose();
-    } else {
-      setErrores(nuevosErrores);
-    }
-  };
-
-  const handleEditarProducto = (id) => {};
-
-  const handleBorrarProducto = (id) => {
-    setProductos(productos.filter((producto) => producto.id !== id));
+  const onSubmit = (producto) => {
+    console.log(producto);
   };
 
   return (
     <Container className="mainContainer mt-3">
       <div className="table-responsive">
-        <h2 className="lead">Productos Disponibles:</h2>
+        <h2 className="lead display-3">Productos Disponibles:</h2>
         <div className="d-flex justify-content-end mb-3">
           <button className="btn btn-primary" onClick={handleAgregarModalOpen}>
-          <i className="bi bi-plus-lg"></i>
+            <i className="bi bi-plus-lg"></i> Agregar
           </button>
         </div>
         <table className="table table-striped table-bordered">
@@ -129,85 +86,130 @@ const Administrador = () => {
 
       <Modal show={showAgregarModal} onHide={handleAgregarModalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Agregar Producto</Modal.Title>
+          <Modal.Title className="lead">
+            <strong>Nuevo Producto</strong>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group controlId="nombreProducto">
               <Form.Label>Producto*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el nombre"
-                isInvalid={!!errores.nombreProducto}
+                {...register("nombreProducto", {
+                  required: "El nombre del producto es obligatorio",
+                  minLength: {
+                    value: 2,
+                    message: "Debe tener al menos 2 caracteres",
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: "No debe superar los 30 caracteres",
+                  },
+                })}
               />
-            <Form.Control.Feedback type="invalid">
-              {errores.nombreProducto}
-            </Form.Control.Feedback>
+              <Form.Text className="text-danger">
+                {errors.nombreProducto?.message}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="precio">
               <Form.Label>Precio*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el precio"
-                isInvalid={!!errores.precio}
+                {...register("precio", {
+                  required: "El precio del producto es obligatorio",
+                  min: {
+                    value: 2,
+                    message: "Debe tener al menos 2 caracteres",
+                  },
+                  max: {
+                    value: 30,
+                    message: "Debe ingresar como maximo 30 caracteres",
+                  },
+                })}
               />
-            <Form.Control.Feedback type="invalid">
-              {errores.precio}
-            </Form.Control.Feedback>
+              <Form.Text className="text-danger">
+                {errors.precio?.message}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="imagen">
               <Form.Label>Imagen URL*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese la URL de la imagen"
-                isInvalid={!!errores.imagen}
+                {...register("imagen", {
+                  required: "La URL de la imagen es obligatoria",
+                })}
               />
-            <Form.Control.Feedback type="invalid">
-              {errores.imagen}
-            </Form.Control.Feedback>
+              <Form.Text className="text-danger">
+                {errors.imagen?.message}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="categoria">
               <Form.Label>Categoría*</Form.Label>
               <Form.Select
-                defaultValue="bebidaCaliente"
-                isInvalid={!!errores.categoria}
+                defaultValue=""
+                {...register("categoria", {
+                  required: "Seleccione una opción",
+                })}
               >
+                <option value="" disabled>Seleccione una categoría</option>
                 <option value="bebidaCaliente">Bebida Caliente</option>
                 <option value="bebidaFria">Bebida Fría</option>
               </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              {errores.categoria}
-            </Form.Control.Feedback>
+              <Form.Text className="text-danger">
+                {errors.categoria?.message}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="descripcionBreve">
               <Form.Label>Descripcion breve*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese una descripcion breve"
-                isInvalid={!!errores.descripcionBreve}
+                {...register("descripcionBreve", {
+                  required: "Inserte una descripción breve por favor",
+                  minLength: {
+                    value: 5,
+                    message: "Debe tener al menos 5 caracteres",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "No debe superar los 20 caracteres",
+                  },
+                })}
               />
-            <Form.Control.Feedback type="invalid">
-              {errores.descripcionBreve}
-            </Form.Control.Feedback>
+               <Form.Text className="text-danger">
+                {errors.descripcionBreve?.message}
+              </Form.Text>
             </Form.Group>
             <Form.Group controlId="descripcionAmplia">
               <Form.Label>Descripcion Amplia*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese una descripcion amplia"
-                isInvalid={!!errores.descripcionAmplia}
+                {...register("descripcionAmplia", {
+                  required: "Inserte una descripción amplia por favor",
+                  minLength: {
+                    value: 15,
+                    message: "Debe tener al menos 15 caracteres",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "No debe superar los 50 caracteres",
+                  },
+                })}
               />
-            <Form.Control.Feedback type="invalid">
-              {errores.descripcionAmplia}
-            </Form.Control.Feedback>
+               <Form.Text className="text-danger">
+                {errors.descripcionAmplia?.message}
+              </Form.Text>
             </Form.Group>
+            <Button variant="success" type="submit" className="mt-3">
+              Agregar nuevo producto
+            </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={() => handleAgregarProducto()}>
-            Agregar
-          </Button>
-        </Modal.Footer>
       </Modal>
     </Container>
   );
